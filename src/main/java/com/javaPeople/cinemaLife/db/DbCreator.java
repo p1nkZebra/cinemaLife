@@ -66,8 +66,7 @@ public class DbCreator {
                     + " CINEMA_ID                 INT                     NOT NULL, "
                     + " NAME                      VARCHAR(100)            NOT NULL, "
                     + " ROWS                      INT                     NOT NULL, "
-                    + " SEATS_IN_ROW              TIME                    NOT NULL, "
-                    + " END_TIME                  TIME                    NOT NULL  "
+                    + " SEATS_IN_ROW              INT                     NOT NULL  "
                     + " ) ";
             stmt.executeUpdate(sql);
 

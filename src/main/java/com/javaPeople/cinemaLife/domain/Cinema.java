@@ -1,5 +1,7 @@
 package com.javaPeople.cinemaLife.domain;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Cinema {
 
     private Long id;
@@ -30,5 +32,14 @@ public class Cinema {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("name", name)
+                .append("city", city)
+                .toString();
     }
 }
