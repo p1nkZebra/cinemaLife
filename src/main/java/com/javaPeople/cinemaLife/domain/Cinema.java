@@ -34,9 +34,9 @@ public class Cinema {
         this.city = city;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
+    @java.lang.Override
+    public java.lang.String toString() {
+        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
                 .append("id", id)
                 .append("name", name)
                 .append("city", city)
