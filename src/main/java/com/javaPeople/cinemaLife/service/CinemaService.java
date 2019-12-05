@@ -10,15 +10,7 @@ import java.sql.Statement;
 public class CinemaService {
 
 
-    public static void main(String[] args) {
-
-        Cinema cinema = getFirstFromCinemaTable();
-        System.out.println(cinema);
-
-
-    }
-
-    private static Cinema getFirstFromCinemaTable() {
+    public Cinema findById(Long cinemaId) {
 
         Cinema cinema = null;
 
@@ -37,7 +29,7 @@ public class CinemaService {
             stmt = c.createStatement();
 
 
-            sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE ID = 1 ";
+            sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE ID = " + cinemaId;
             ResultSet resultSet = stmt.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -46,7 +38,7 @@ public class CinemaService {
                 String name = resultSet.getString("name");
                 String city = resultSet.getString("city");
 
-                cinema = createNewCinema(id, name, city);
+                cinema = new Cinema(id, name, city);
             }
 
             stmt.close();
@@ -62,16 +54,16 @@ public class CinemaService {
 
     }
 
-    private static Cinema createNewCinema(long id,
-                                          String name,
-                                          String city) {
-        Cinema result = new Cinema();
+    public Cinema findByName(String cinemaName) {
+        //todo
 
-        result.setId(id);
-        result.setName(name);
-        result.setCity(city);
-
-        return result;
-
+        return null;
     }
+
+    public Cinema save(Cinema cinema) {
+        //todo
+
+        return null;
+    }
+
 }
