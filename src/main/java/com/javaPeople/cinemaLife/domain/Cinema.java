@@ -34,12 +34,13 @@ public class Cinema {
         this.city = city;
     }
 
-    @java.lang.Override
+   @java.lang.Override
     public java.lang.String toString() {
-        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
+        return "id: " + id + ", name: " + name + ", city: " + city;
+        /*return new org.apache.commons.lang3.builder.ToStringBuilder(this)
                 .append("id", id)
                 .append("name", name)
                 .append("city", city)
-                .toString();
+                .toString();*/
     }
 }

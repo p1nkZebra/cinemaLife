@@ -13,7 +13,10 @@ public class CinemaService {
     public static void main(String[] args) {
 
         Cinema cinema = getFirstFromCinemaTable();
-        System.out.println(cinema);
+
+
+        System.out.println(cinema.toString());
+
 
 
     }
@@ -31,7 +34,7 @@ public class CinemaService {
             c = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/postgres",
                     "postgres",
-                    "123"
+                    "3$Jf&z#9d*&2"
             );
 
             stmt = c.createStatement();

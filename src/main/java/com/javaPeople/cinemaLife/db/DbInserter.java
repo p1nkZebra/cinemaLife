@@ -16,7 +16,7 @@ public class DbInserter {
             c = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/postgres",
                     "postgres",
-                    "123"
+                    "3$Jf&z#9d*&2"
             );
 
             stmt = c.createStatement();
