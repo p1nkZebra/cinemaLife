@@ -16,7 +16,7 @@ public class DbCreator {
             c = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/postgres",
                     "postgres",
-                    "3$Jf&z#9d*&2"
+                    DbConfig.DB_PASSWORD
             );
 
             stmt = c.createStatement();
