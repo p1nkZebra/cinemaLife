@@ -86,9 +86,10 @@ public class ShowTimeDao {
                     DbConfig.DB_PASSWORD
             );
 
-            sql = "   SELECT a.*, b.name  as film_name " +
-                    " FROM cinema_life.show_time a" +
-                    " JOIN  cinema_life.film b ON (a.film_id = b.id)" +
+            sql = "   SELECT a.*, b.name as film_name, c.name as screen_name " +
+                    " FROM cinema_life.show_time as a" +
+                    " JOIN  cinema_life.film as b ON (a.film_id = b.id)" +
+                    " JOIN  cinema_life.screen as c ON (a.screen_id = c.id)" +
                     " WHERE 1 = 1 " +
                     "       AND a.date_time between ? AND ? ";
 
@@ -102,11 +103,11 @@ public class ShowTimeDao {
             while (resultSet.next()) {
                 // Now we can fetch the data by column name, save and use them!
                 long id = resultSet.getLong("id");
-//                long screenId = resultSet.getLong("screen_name");
+                String screenName = resultSet.getString("screen_name");
                 String filmName = resultSet.getString("film_name");
                 Timestamp dateTime = resultSet.getTimestamp("date_time");
 
-                ShowTimeDto showTimeDto = new ShowTimeDto(id, filmName, "test", dateTime.toLocalDateTime());
+                ShowTimeDto showTimeDto = new ShowTimeDto(id, filmName, screenName, dateTime.toLocalDateTime());
                 showTimeList.add(showTimeDto);
 
             }
