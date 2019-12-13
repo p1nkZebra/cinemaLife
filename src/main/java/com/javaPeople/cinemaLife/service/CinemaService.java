@@ -15,6 +15,7 @@ public class CinemaService {
 
         Cinema cinema = null;
 
+        System.out.println("HeY");
         Connection c = null;
         Statement stmt = null;
         String sql = "";
@@ -38,8 +39,8 @@ public class CinemaService {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 String city = resultSet.getString("city");
-
                 cinema = new Cinema(id, name, city);
+
             }
 
             stmt.close();
@@ -56,16 +57,11 @@ public class CinemaService {
     }
 
 
-
-    public Cinema findByName(String cinemaName) {
-
-
+    public  Cinema findByName(String cinemaName) {
             Cinema cinema = null;
-
             Connection c = null;
             Statement stmt = null;
             String sql = "";
-
             try {
                 Class.forName("org.postgresql.Driver");
                 c = DriverManager.getConnection(
@@ -73,14 +69,10 @@ public class CinemaService {
                         "postgres",
                         "3$Jf&z#9d*&2"
                 );
-
                 stmt = c.createStatement();
-
-
                 sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE name LIKE '%" + cinemaName + "%'";
 
                 ResultSet resultSet = stmt.executeQuery(sql);
-
 
                 while (resultSet.next()) {
                     // Now we can fetch the data by column name, save and use them!
@@ -88,7 +80,9 @@ public class CinemaService {
                     String name = resultSet.getString("name");
                     String city = resultSet.getString("city");
 
-                    cinema = new Cinema(id, name, city); }
+                    cinema = new Cinema(id, name, city);
+                    System.out.println(cinema);
+                }
 
                 stmt.close();
                 c.close();
@@ -103,18 +97,13 @@ public class CinemaService {
 
         }
 
-    public static  void save (String name, String city) {
 
 
-    }
-
-    public static  void save (Cinema cinema) {
+    public  void save (Cinema cinema) {
 
         Connection connection = null;
         PreparedStatement statement = null;
         String sql = "";
-
-
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -124,33 +113,13 @@ public class CinemaService {
                     "3$Jf&z#9d*&2"
             );
 
-            sql = "SELECT ID FROM CINEMA_LIFE.CINEMA ORDER BY ID ASC";
-            statement = connection.prepareStatement(sql);
 
-            ResultSet resultSet = statement.executeQuery();
-            boolean isValid=true;
-            long i = 0;
-            while (resultSet.next()) {
-                 i = resultSet.getLong("id");
-                System.out.println(resultSet.getLong("id"));
-                if (i == cinema.getId()) {
-                    isValid=false;
-                    System.out.println("Идите в жопу");
-                }
-            }
-            System.out.println(i+" Fast");
-            i++;
-
-               sql = "INSERT INTO CINEMA_LIFE.CINEMA (ID, NAME, CITY)" +
-                        "VALUES (?,? ,?)";
+               sql = "INSERT INTO CINEMA_LIFE.CINEMA (NAME, CITY)" +
+                        "VALUES (? ,?)";
                statement = connection.prepareStatement(sql);
-            if (isValid == false) {
-               statement.setInt(1, (int)i);
-            } else {
-                statement.setInt(1, cinema.getId().intValue());
-            }
-                statement.setString(2, cinema.getName());
-                statement.setString(3, cinema.getCity());
+
+                statement.setString(1, cinema.getName());
+                statement.setString(2, cinema.getCity());
                 statement.executeUpdate();
                 System.out.println(statement);
 
