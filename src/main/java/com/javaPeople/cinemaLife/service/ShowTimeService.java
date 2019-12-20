@@ -15,18 +15,17 @@ public class ShowTimeService {
 
         ShowTimeDao dao = new ShowTimeDao();
 
-        LocalDateTime dateTimeFrom = date.atStartOfDay();
+        LocalDateTime dateTimeFrom = date.atTime(9,0);
         Timestamp from = Timestamp.valueOf(dateTimeFrom);
-
-        LocalDateTime dateTimeTo = date.plusDays(1).atStartOfDay();
+        LocalDateTime dateTimeTo = date.plusDays(1).atTime(3,0);
         Timestamp to = Timestamp.valueOf(dateTimeTo);
 
 
-        List<ShowTime> showTimeList = dao.findBetweenDateTimes(from, to);
-
-        for (ShowTime st : showTimeList) {
-            System.out.println(st.getDateTime() + " - filmId: " + st.getFilmId() + " - screenId: " + st.getScreenId());
-        }
+//        List<ShowTime> showTimeList = dao.findBetweenDateTimes(from, to);
+//
+//        for (ShowTime st : showTimeList) {
+//            System.out.println(st.getDateTime() + " - filmId: " + st.getFilmId() + " - screenId: " + st.getScreenId());
+//        }
 
 
 

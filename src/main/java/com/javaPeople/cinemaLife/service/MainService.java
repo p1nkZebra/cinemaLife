@@ -25,8 +25,8 @@ public class MainService {
 //        Cinema cinema2 = new Cinema(7L,"Осмос", "New Jersey");
 //          cinemaService.save(cinema2);
 //        System.out.println(cinema2.toString());
-//        ShowTimeService showTimeService = new ShowTimeService();
-//        showTimeService.printShowTimeForDate(LocalDate.parse("2019-12-20"));
+        ShowTimeService showTimeService = new ShowTimeService();
+        showTimeService.printShowTimeForDate(LocalDate.parse("2019-12-21"));
 
 
 
