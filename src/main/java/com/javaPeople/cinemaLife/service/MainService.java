@@ -19,8 +19,9 @@ public class MainService {
 
         CinemaService cinemaService = new CinemaService();
         ScreenService screenService = new ScreenService();
-        Screen screen1 = new Screen(3L,4L,"Big Dayse", 12,24);
-        screenService.save(screen1);
+//        Screen screen1 = new Screen(3L,3L,"Middle Dayse", 22,34);
+//        screenService.save(screen1);
+        System.out.println(screenService.ScreenCapacity(300));
 //        Cinema cinema2 = new Cinema(7L,"Осмос", "New Jersey");
 //          cinemaService.save(cinema2);
 //        System.out.println(cinema2.toString());

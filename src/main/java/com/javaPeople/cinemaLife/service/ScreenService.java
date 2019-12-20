@@ -143,8 +143,6 @@ public class ScreenService {
                 statement.setInt(3, screen.getRows());
                 statement.setInt(4, screen.getSeatsInRow());
                 statement.executeUpdate();
-                System.out.println(statement);
-
                 statement.close();
                 connection.close();
 
@@ -159,6 +157,59 @@ public class ScreenService {
 
 
     }
+
+    public String ScreenCapacity (int audience) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String sql = "";
+
+        CinemaService CS = new CinemaService();
+//        cin = CS.findById(screen.getCinemaId());
+
+            try {
+                Class.forName("org.postgresql.Driver");
+                connection = DriverManager.getConnection(
+                        "jdbc:postgresql://localhost:5432/postgres",
+                        "postgres",
+                        DbConfig.DB_PASSWORD
+                );
+
+                sql = "   SELECT b.name as cinema_name " +
+                        " FROM cinema_life.screen as a" +
+                        " JOIN  cinema_life.cinema as b ON (a.cinema_id = b.id)"+
+                        " WHERE 1 = 1 " +
+                        "       AND a.rows*a.seats_in_row > ? " +
+                        "       GROUP BY cinema_name";
+
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, audience);
+                ResultSet RS = statement.executeQuery();
+                boolean check=true;
+                sql ="Кинотеатры с достаточной вместимостью: ";
+                while (RS.next()) {
+                    if (check) {
+                        sql = sql + RS.getString("cinema_name");
+                        check=false;
+                    } else {
+                    sql = sql + ", " + RS.getString("cinema_name");
+
+                    }
+                }
+                sql = sql + ".";
+                statement.close();
+                connection.close();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+
+        return sql;
+    }
+
 
 
 }
