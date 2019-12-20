@@ -38,7 +38,6 @@ public class ShowTimeDao {
             statement.setTimestamp(1, dateTimeFrom);
             statement.setTimestamp(2, dateTimeTo);
 
-
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

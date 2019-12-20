@@ -15,7 +15,7 @@ public class CinemaService {
 
         Cinema cinema = null;
 
-        System.out.println("HeY");
+        System.out.println("Ищем cinema по ID");
         Connection c = null;
         Statement stmt = null;
         String sql = "";
@@ -40,6 +40,7 @@ public class CinemaService {
                 String name = resultSet.getString("name");
                 String city = resultSet.getString("city");
                 cinema = new Cinema(id, name, city);
+
 
             }
 

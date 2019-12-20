@@ -1,5 +1,7 @@
 package com.javaPeople.cinemaLife.service;
 
+import com.javaPeople.cinemaLife.db.DbConfig;
+import com.javaPeople.cinemaLife.domain.Cinema;
 import com.javaPeople.cinemaLife.domain.Screen;
 
 import java.sql.Connection;
@@ -110,6 +112,52 @@ public class ScreenService {
         }
 
         return screen;
+    }
+
+    public  void save (Screen screen) {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String sql = "";
+
+//        Cinema cin = null;
+        CinemaService CS = new CinemaService();
+//        cin = CS.findById(screen.getCinemaId());
+        if (CS.findById(screen.getCinemaId()) == null) {
+            System.out.println("Не корректный Cinema_id");
+        } else {
+            System.out.println("Успешно сохраняем запись");
+            try {
+                Class.forName("org.postgresql.Driver");
+                connection = DriverManager.getConnection(
+                        "jdbc:postgresql://localhost:5432/postgres",
+                        "postgres",
+                        DbConfig.DB_PASSWORD
+                );
+
+                sql = "INSERT INTO CINEMA_LIFE.SCREEN (CINEMA_ID, NAME, ROWS, SEATS_IN_ROW)" +
+                        "VALUES (?, ? ,? ,?)";
+                statement = connection.prepareStatement(sql);
+                statement.setLong(1, screen.getCinemaId());
+                statement.setString(2, screen.getName());
+                statement.setInt(3, screen.getRows());
+                statement.setInt(4, screen.getSeatsInRow());
+                statement.executeUpdate();
+                System.out.println(statement);
+
+                statement.close();
+                connection.close();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+
+        }
+
+
     }
 
 
