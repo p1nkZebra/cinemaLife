@@ -119,10 +119,7 @@ public class ScreenService {
         Connection connection = null;
         PreparedStatement statement = null;
         String sql = "";
-
-//        Cinema cin = null;
         CinemaService CS = new CinemaService();
-//        cin = CS.findById(screen.getCinemaId());
         if (CS.findById(screen.getCinemaId()) == null) {
             System.out.println("Не корректный Cinema_id");
         } else {
@@ -164,8 +161,6 @@ public class ScreenService {
         PreparedStatement statement = null;
         String sql = "";
 
-        CinemaService CS = new CinemaService();
-//        cin = CS.findById(screen.getCinemaId());
 
             try {
                 Class.forName("org.postgresql.Driver");
