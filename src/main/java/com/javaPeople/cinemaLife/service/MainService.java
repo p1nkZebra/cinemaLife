@@ -26,7 +26,7 @@ public class MainService {
 //          cinemaService.save(cinema2);
 //        System.out.println(cinema2.toString());
         ShowTimeService showTimeService = new ShowTimeService();
-        showTimeService.printShowTimeForDate(LocalDate.parse("2019-12-21"));
+        //showTimeService.printShowTimeForCinema(LocalDate.parse("2019-12-21"),"Рекорд Звезд");
 
 
 

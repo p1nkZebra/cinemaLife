@@ -13,28 +13,33 @@ public class ShowTimeService {
 
     public void printShowTimeForDate(LocalDate date) {
 
-        ShowTimeDao dao = new ShowTimeDao();
-
         LocalDateTime dateTimeFrom = date.atTime(9,0);
-        Timestamp from = Timestamp.valueOf(dateTimeFrom);
         LocalDateTime dateTimeTo = date.plusDays(1).atTime(3,0);
-        Timestamp to = Timestamp.valueOf(dateTimeTo);
 
+        printShowTimeForDatetimePeriod(
+                convertToTimeStamp(dateTimeFrom),
+                convertToTimeStamp(dateTimeTo)
+        );
+    }
 
-//        List<ShowTime> showTimeList = dao.findBetweenDateTimes(from, to);
-//
-//        for (ShowTime st : showTimeList) {
-//            System.out.println(st.getDateTime() + " - filmId: " + st.getFilmId() + " - screenId: " + st.getScreenId());
-//        }
+    public void printShowTimeForDate(LocalDateTime from, LocalDateTime to) {
+        printShowTimeForDatetimePeriod(
+                convertToTimeStamp(from),
+                convertToTimeStamp(to)
+        );
+    }
 
+    private void printShowTimeForDatetimePeriod(Timestamp from, Timestamp to) {
 
-
+        ShowTimeDao dao = new ShowTimeDao();
         List<ShowTimeDto> showTimeDtoList = dao.findShowTimeDtosBetweenDateTimes(from, to);
 
         for (ShowTimeDto st : showTimeDtoList) {
             System.out.println(st.getDateTime() + " - film: " + st.getFilmName() + " - screen: " + st.getScreenName());
         }
+    }
 
-
+    private Timestamp convertToTimeStamp(LocalDateTime dateTimeFrom) {
+        return Timestamp.valueOf(dateTimeFrom);
     }
 }

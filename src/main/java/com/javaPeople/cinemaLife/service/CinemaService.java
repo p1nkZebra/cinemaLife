@@ -71,7 +71,7 @@ public class CinemaService {
                         "3$Jf&z#9d*&2"
                 );
                 stmt = c.createStatement();
-                sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE name LIKE '%" + cinemaName + "%'";
+                sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE name =" + cinemaName ;
 
                 ResultSet resultSet = stmt.executeQuery(sql);
 
