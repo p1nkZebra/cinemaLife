@@ -2,6 +2,8 @@ package com.javaPeople.cinemaLife.service;
 
         import com.itextpdf.text.DocumentException;
         import com.itextpdf.text.pdf.BaseFont;
+        import com.javaPeople.cinemaLife.dao.TicketDao;
+        import com.javaPeople.cinemaLife.domain.Ticket;
         import org.xhtmlrenderer.pdf.ITextRenderer;
 
         import java.io.*;
@@ -27,7 +29,7 @@ public class TicketService {
         html = setTicketIdToHtml(html,ticketId);
         htmlToFile(html);
 
-        String htmlPath = RESOURSES_PATH + "fileName.html";
+        String htmlPath = RESOURSES_PATH + "setIdTicket.html";
 
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocument(new File(htmlPath));
@@ -52,8 +54,15 @@ public class TicketService {
     }
 
     static void htmlToFile(String html) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(RESOURSES_PATH + "fileName.html"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(RESOURSES_PATH + "setIdTicket.html"));
         writer.write(html);
         writer.close();
     }
+
+    public void save (Ticket ticket) {
+
+        TicketDao dao = new TicketDao();
+        dao.save(ticket);
+    }
+
 }

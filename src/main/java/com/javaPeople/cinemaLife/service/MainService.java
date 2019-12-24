@@ -3,6 +3,7 @@ package com.javaPeople.cinemaLife.service;
 import com.itextpdf.text.DocumentException;
 import com.javaPeople.cinemaLife.domain.Cinema;
 import com.javaPeople.cinemaLife.domain.Screen;
+import com.javaPeople.cinemaLife.domain.Ticket;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,20 +16,12 @@ public class MainService {
 
     public static void main(String[] args) throws IOException, URISyntaxException, DocumentException, SAXException, ParserConfigurationException {
 
+        TicketService ticketService = new TicketService();
+        ticketService.printTicket(82L);
+        Ticket ticket = new Ticket(3L,1L,10,15);
+        ticketService.save(ticket);
 
-        CinemaService cinemaService = new CinemaService();
-        ScreenService screenService = new ScreenService();
-//        Screen screen1 = new Screen(3L,3L,"Middle Dayse", 22,34);
-//        screenService.save(screen1);
-//        System.out.println(Arrays.toString(screenService.getCinemaListByCapacity(300).toArray()));
-//        Cinema cinema2 = new Cinema(7L,"Осмос", "New Jersey");
-//          cinemaService.save(cinema2);
-//        System.out.println(cinema2.toString());
-       // ShowTimeService showTimeService = new ShowTimeService();
-        //showTimeService.printShowTimeForCinema(LocalDate.parse("2019-12-21"),"Рекорд Звезд");
-
-    TicketService ticketService = new TicketService();
-    ticketService.printTicket(342L);
-
+//        Ticket ticket1 = new Ticket(3L,4L,12,25);
+//        ticketService.save(ticket1);
     }
 }
