@@ -16,8 +16,7 @@ package com.javaPeople.cinemaLife.service;
 
 public class TicketService {
 
-    public static final String FONT_COMIC ="fonts/Comic Sans/comic.ttf";
-    public static final String FONT_ARIAL = "fonts/Arial/arial.ttf";
+
     public static final String RESOURSES_PATH = "src\\main\\resources\\";
 
     public void printTicket(long ticketId) throws IOException, DocumentException {
@@ -33,14 +32,45 @@ public class TicketService {
 
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocument(new File(htmlPath));
-        renderer.getFontResolver().addFont(FONT_COMIC, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-        renderer.getFontResolver().addFont(FONT_ARIAL, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        addFontsFromDirectory (renderer, RESOURSES_PATH + "fonts\\" );
         renderer.layout();
 
         String outputFile = RESOURSES_PATH + "Ticket.pdf";
         OutputStream os = new FileOutputStream(outputFile);
         renderer.createPDF(os);
         os.close();
+
+    }
+
+    private void addFontsFromDirectory(ITextRenderer renderer, String dir) throws DocumentException, IOException {
+
+            File f = new File(dir);
+            for (int i=0; i<f.list().length; i++){
+
+                File childFile = f.listFiles()[i]; /** Берем каждый файл или подпапку в папке fonts **/
+
+                if (childFile.isDirectory()){
+                    for (int j=0;j<childFile.list().length;j++)  /** Проходим по все файлы в подпапке **/
+                    {
+
+                        String innerFileName = childFile.listFiles()[j].getName(); /** имя файлов в подпапке childFile **/
+
+                        if (innerFileName.endsWith(".ttf")|| innerFileName.endsWith(".otf") ) /**если это файл шрифта .ttf или .otg **/
+                        {
+                            File innerFile = childFile.listFiles()[j];
+                            renderer.getFontResolver().addFont(innerFile.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                            System.out.println(innerFile.getName());
+                        }
+
+                    }
+                }
+                else /** если же childFile - это файл **/ {
+                    if (childFile.getName().endsWith(".ttf")|| childFile.getName().endsWith(".otf")) {
+                        renderer.getFontResolver().addFont(childFile.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                        System.out.println(f.list()[i]);
+                    }
+                }
+            }
 
     }
 
