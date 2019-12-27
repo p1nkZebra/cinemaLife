@@ -16,6 +16,8 @@ package com.javaPeople.cinemaLife.service;
 
 public class TicketService {
 
+    ITextRenderer renderer = new ITextRenderer();
+    /** Наверно криво так делать, Да?? )) **/
 
     public static final String RESOURSES_PATH = "src\\main\\resources\\";
 
@@ -25,24 +27,24 @@ public class TicketService {
 
         String html = readFile("Ticket.html");
 
-        html = setTicketIdToHtml(html,ticketId);
-        htmlToFile(html);
+        html = setTicketIdToHtml(html,ticketId); /** Вставляем номер билета**/
+        String setIdHtmlPath = htmlToFile(html); /** setIdHtmlPath - путь к новому Html**/
+        System.out.println(readFile("setIdTicket.html"));
+        File setIdHtmlFile = new File(setIdHtmlPath);
 
-        String htmlPath = RESOURSES_PATH + "setIdTicket.html";
-
-        ITextRenderer renderer = new ITextRenderer();
-        renderer.setDocument(new File(htmlPath));
-        addFontsFromDirectory (renderer, RESOURSES_PATH + "fonts\\" );
+        renderer.setDocument(setIdHtmlFile);
+        addFontsFromDirectory (RESOURSES_PATH + "fonts\\" );
         renderer.layout();
 
-        String outputFile = RESOURSES_PATH + "Ticket.pdf";
+        String outputFile = RESOURSES_PATH + "Ticket "+String.valueOf(ticketId)+".pdf";
         OutputStream os = new FileOutputStream(outputFile);
         renderer.createPDF(os);
+        setIdHtmlFile.delete();
         os.close();
 
     }
 
-    private void addFontsFromDirectory(ITextRenderer renderer, String dir) throws DocumentException, IOException {
+    private void addFontsFromDirectory(String dir) throws DocumentException, IOException {
 
             File f = new File(dir);
             for (int i=0; i<f.list().length; i++){
@@ -50,29 +52,26 @@ public class TicketService {
                 File childFile = f.listFiles()[i]; /** Берем каждый файл или подпапку в папке fonts **/
 
                 if (childFile.isDirectory()){
-                    for (int j=0;j<childFile.list().length;j++)  /** Проходим по все файлы в подпапке **/
-                    {
-
-                        String innerFileName = childFile.listFiles()[j].getName(); /** имя файлов в подпапке childFile **/
-
-                        if (innerFileName.endsWith(".ttf")|| innerFileName.endsWith(".otf") ) /**если это файл шрифта .ttf или .otg **/
-                        {
-                            File innerFile = childFile.listFiles()[j];
-                            renderer.getFontResolver().addFont(innerFile.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                            System.out.println(innerFile.getName());
-                        }
-
-                    }
+                    for (int j=0;j<childFile.list().length;j++)  /** Проходим  все файлы в подпапке **/
+                    { acceptFontFile (childFile.listFiles()[j]); }
                 }
+
                 else /** если же childFile - это файл **/ {
-                    if (childFile.getName().endsWith(".ttf")|| childFile.getName().endsWith(".otf")) {
-                        renderer.getFontResolver().addFont(childFile.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                        System.out.println(f.list()[i]);
-                    }
+                    acceptFontFile(childFile);
                 }
             }
 
+
     }
+
+    private void acceptFontFile(File file) throws IOException, DocumentException {
+        if (file.getName().endsWith(".ttf")|| file.getName().endsWith(".otf") ) /**если это файл шрифта .ttf или .otg **/
+        {
+            renderer.getFontResolver().addFont(file.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            System.out.println(file.getName());
+        }
+    }
+
 
     static String readFile(String path) throws IOException{
         byte[] encoded = Files.readAllBytes(Paths.get(RESOURSES_PATH + path));
@@ -83,14 +82,15 @@ public class TicketService {
         return html.replace("#",String.valueOf(ticketId));
     }
 
-    static void htmlToFile(String html) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(RESOURSES_PATH + "setIdTicket.html"));
+    static String htmlToFile(String html) throws IOException {
+        String newPath = RESOURSES_PATH + "setIdTicket.html";
+        BufferedWriter writer = new BufferedWriter(new FileWriter(newPath));
         writer.write(html);
         writer.close();
+        return newPath;
     }
 
     public void save (Ticket ticket) {
-
         TicketDao dao = new TicketDao();
         dao.save(ticket);
     }

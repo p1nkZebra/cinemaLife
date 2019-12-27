@@ -17,7 +17,8 @@ public class MainService {
     public static void main(String[] args) throws IOException, URISyntaxException, DocumentException, SAXException, ParserConfigurationException {
 
         TicketService ticketService = new TicketService();
-        ticketService.printTicket(14L);
+        ticketService.printTicket(254L);
+        ticketService.printTicket(34L);
         //Ticket ticket = new Ticket(3L,1L,10,15);
         //ticketService.save(ticket);
 
