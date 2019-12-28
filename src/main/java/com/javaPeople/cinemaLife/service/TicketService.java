@@ -16,35 +16,31 @@ package com.javaPeople.cinemaLife.service;
 
 public class TicketService {
 
-    ITextRenderer renderer = new ITextRenderer();
-    /** Наверно криво так делать, Да?? )) **/
-
     public static final String RESOURSES_PATH = "src\\main\\resources\\";
 
     public void printTicket(long ticketId) throws IOException, DocumentException {
 
         /**Способ Наташи**/
-
+        ITextRenderer renderer = new ITextRenderer();
         String html = readFile("Ticket.html");
 
         html = setTicketIdToHtml(html,ticketId); /** Вставляем номер билета**/
         String setIdHtmlPath = htmlToFile(html); /** setIdHtmlPath - путь к новому Html**/
-        System.out.println(readFile("setIdTicket.html"));
         File setIdHtmlFile = new File(setIdHtmlPath);
-
         renderer.setDocument(setIdHtmlFile);
-        addFontsFromDirectory (RESOURSES_PATH + "fonts\\" );
+        addFontsFromDirectory (RESOURSES_PATH + "fonts\\" , renderer);
         renderer.layout();
 
-        String outputFile = RESOURSES_PATH + "Ticket "+String.valueOf(ticketId)+".pdf";
+        String outputFile = RESOURSES_PATH + "Ticket "+ String.valueOf(ticketId)+".pdf";
         OutputStream os = new FileOutputStream(outputFile);
         renderer.createPDF(os);
+
         setIdHtmlFile.delete();
         os.close();
 
     }
 
-    private void addFontsFromDirectory(String dir) throws DocumentException, IOException {
+    private void addFontsFromDirectory(String dir, ITextRenderer renderer) throws DocumentException, IOException {
 
             File f = new File(dir);
             for (int i=0; i<f.list().length; i++){
@@ -53,18 +49,18 @@ public class TicketService {
 
                 if (childFile.isDirectory()){
                     for (int j=0;j<childFile.list().length;j++)  /** Проходим  все файлы в подпапке **/
-                    { acceptFontFile (childFile.listFiles()[j]); }
+                    { acceptFontFile (childFile.listFiles()[j], renderer); }
                 }
 
                 else /** если же childFile - это файл **/ {
-                    acceptFontFile(childFile);
+                    acceptFontFile(childFile, renderer);
                 }
             }
 
 
     }
 
-    private void acceptFontFile(File file) throws IOException, DocumentException {
+    private void acceptFontFile(File file, ITextRenderer renderer) throws IOException, DocumentException {
         if (file.getName().endsWith(".ttf")|| file.getName().endsWith(".otf") ) /**если это файл шрифта .ttf или .otg **/
         {
             renderer.getFontResolver().addFont(file.getAbsolutePath(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -74,7 +70,7 @@ public class TicketService {
 
 
     static String readFile(String path) throws IOException{
-        byte[] encoded = Files.readAllBytes(Paths.get(RESOURSES_PATH + path));
+        byte[] encoded = Files.readAllBytes(Paths.get(RESOURSES_PATH +"html/"+ path));
         return new String(encoded);
     }
 
@@ -83,7 +79,7 @@ public class TicketService {
     }
 
     static String htmlToFile(String html) throws IOException {
-        String newPath = RESOURSES_PATH + "setIdTicket.html";
+        String newPath = RESOURSES_PATH +"html/setIdTicket.html";
         BufferedWriter writer = new BufferedWriter(new FileWriter(newPath));
         writer.write(html);
         writer.close();
