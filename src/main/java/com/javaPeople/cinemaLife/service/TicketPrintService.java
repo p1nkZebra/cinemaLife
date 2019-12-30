@@ -5,9 +5,10 @@ import com.javaPeople.cinemaLife.utils.PdfCreator;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -20,8 +21,8 @@ public class TicketPrintService {
 
     public static void printViaPdfWriter() throws IOException, URISyntaxException, DocumentException {
 
-        URI resourcesURI = ClassLoader.getSystemResource("").toURI();
-        String resourcesPathString = resourcesURI.toURL().getPath();
+        URL resourcesURL = ClassLoader.getSystemResource("");
+        String resourcesPathString = new File(resourcesURL.getFile()).getAbsolutePath();
 
         Path ticketHtmlPath = Paths.get(resourcesPathString, "html", "Ticket.html");
         String htmlFilePathString = ticketHtmlPath.toAbsolutePath().toString();
@@ -32,8 +33,8 @@ public class TicketPrintService {
 
     public static void printViaITextRenderer() throws IOException, URISyntaxException, DocumentException, ParserConfigurationException, SAXException {
 
-        URI resourcesURI = ClassLoader.getSystemResource("").toURI();
-        String resourcesPathString = resourcesURI.toURL().getPath();
+        URL resourcesURL = ClassLoader.getSystemResource("");
+        String resourcesPathString = new File(resourcesURL.getFile()).getAbsolutePath();
 
         Path ticketHtmlPath = Paths.get(resourcesPathString, "html", "Ticket.html");
         String htmlFilePathString = ticketHtmlPath.toAbsolutePath().toString();
