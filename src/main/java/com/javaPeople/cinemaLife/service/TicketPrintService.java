@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -16,13 +17,15 @@ public class TicketPrintService {
 
     public static void main(String[] args) throws DocumentException, IOException, URISyntaxException, ParserConfigurationException, SAXException {
         printViaPdfWriter();
-        printViaITextRenderer();
+//        printViaITextRenderer();
     }
 
     public static void printViaPdfWriter() throws IOException, URISyntaxException, DocumentException {
 
-        URL resourcesURL = ClassLoader.getSystemResource("");
-        String resourcesPathString = new File(resourcesURL.getFile()).getAbsolutePath();
+        URL resourcesURL = ClassLoader.getSystemResource(".");
+        String resourcesPathString = new File(resourcesURL.toURI()).getAbsolutePath();
+        System.out.println(resourcesPathString);
+//        String configPath = URLDecoder.decode(resourcesPathString1, "UTF-8");
 
         Path ticketHtmlPath = Paths.get(resourcesPathString, "html", "Ticket.html");
         String htmlFilePathString = ticketHtmlPath.toAbsolutePath().toString();
@@ -33,8 +36,8 @@ public class TicketPrintService {
 
     public static void printViaITextRenderer() throws IOException, URISyntaxException, DocumentException, ParserConfigurationException, SAXException {
 
-        URL resourcesURL = ClassLoader.getSystemResource("");
-        String resourcesPathString = new File(resourcesURL.getFile()).getAbsolutePath();
+        URL resourcesURL = ClassLoader.getSystemResource(".");
+        String resourcesPathString = new File(resourcesURL.toURI()).getAbsolutePath();
 
         Path ticketHtmlPath = Paths.get(resourcesPathString, "html", "Ticket.html");
         String htmlFilePathString = ticketHtmlPath.toAbsolutePath().toString();

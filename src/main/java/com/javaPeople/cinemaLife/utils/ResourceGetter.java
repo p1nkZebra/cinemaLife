@@ -1,7 +1,7 @@
 package com.javaPeople.cinemaLife.utils;
 
 import com.itextpdf.text.DocumentException;
-import com.javaPeople.cinemaLife.service.Test;
+import com.javaPeople.cinemaLife.service.TicketService;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,13 +19,13 @@ public class ResourceGetter {
     public static void main(String[] args) throws URISyntaxException, SAXException, ParserConfigurationException, DocumentException, IOException {
 
 
-        System.out.println("Resource: " + Test.class.getResource(""));
-        System.out.println("Resource . : " + Test.class.getResource(""));
-        System.out.println("ResourceAsStream: " + Test.class.getResourceAsStream("") + "\n");
+        System.out.println("Resource: " + TicketService.class.getResource(""));
+        System.out.println("Resource . : " + TicketService.class.getResource(""));
+        System.out.println("ResourceAsStream: " + TicketService.class.getResourceAsStream("") + "\n");
 
 
 
-        ClassLoader classLoader = Test.class.getClassLoader();
+        ClassLoader classLoader = TicketService.class.getClassLoader();
         System.out.println("ClassLoader: " + classLoader + "\n");
         System.out.println("ClassLoader.resource: " + classLoader.getResource(""));
         System.out.println("ClassLoader.resources: " + classLoader.getResources("") + "\n");
