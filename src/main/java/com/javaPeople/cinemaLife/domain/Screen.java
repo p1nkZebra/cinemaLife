@@ -1,5 +1,7 @@
 package com.javaPeople.cinemaLife.domain;
 
+import java.util.StringJoiner;
+
 public class Screen {
 
     private Long id;
@@ -9,6 +11,13 @@ public class Screen {
     private Integer seatsInRow;
 
 
+    public Screen(Long id, Long cinemaId, String name, Integer rows, Integer seatsInRow) {
+        this.id = id;
+        this.cinemaId = cinemaId;
+        this.name = name;
+        this.rows = rows;
+        this.seatsInRow = seatsInRow;
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +57,17 @@ public class Screen {
 
     public void setSeatsInRow(Integer seatsInRow) {
         this.seatsInRow = seatsInRow;
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Screen.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("cinemaId=" + cinemaId)
+                .add("name='" + name + "'")
+                .add("rows=" + rows)
+                .add("seatsInRow=" + seatsInRow)
+                .toString();
     }
 }

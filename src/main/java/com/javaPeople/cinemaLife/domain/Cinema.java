@@ -1,6 +1,6 @@
 package com.javaPeople.cinemaLife.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.util.StringJoiner;
 
 public class Cinema {
 
@@ -8,7 +8,11 @@ public class Cinema {
     private String name;
     private String city;
 
-
+    public Cinema(Long id, String name, String city) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+    }
 
     public Long getId() {
         return id;
@@ -34,13 +38,14 @@ public class Cinema {
         this.city = city;
     }
 
-   @java.lang.Override
-    public java.lang.String toString() {
-        return "id: " + id + ", name: " + name + ", city: " + city;
-        /*return new org.apache.commons.lang3.builder.ToStringBuilder(this)
-                .append("id", id)
-                .append("name", name)
-                .append("city", city)
-                .toString();*/
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Cinema.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("city='" + city + "'")
+                .toString();
+
     }
 }
