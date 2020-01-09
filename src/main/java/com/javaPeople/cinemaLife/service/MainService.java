@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class MainService {
@@ -19,10 +20,13 @@ public class MainService {
         TicketService ticketService = new TicketService();
         ticketService.printTicket(254L);
         ticketService.printTicket(34L);
-        //Ticket ticket = new Ticket(3L,1L,10,15);
-        //ticketService.save(ticket);
+        ShowTimeService showTimeService = new ShowTimeService();
+        LocalDate date = LocalDate.of(2019, 12, 21);
+        showTimeService.printShowTimeForDate(date);
+////        LocalDateTime dateTime = date.atTime(3,0);
+////        LocalDateTime dateTime2 = dateTime.plusHours(20);
+////        System.out.println(dateTime2.toString());
 
-//        Ticket ticket1 = new Ticket(3L,4L,12,25);
-//        ticketService.save(ticket1);
+//        showTimeService.printShowTimeForDate(dateTime, dateTime2);
     }
 }

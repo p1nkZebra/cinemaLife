@@ -37,7 +37,18 @@ public class ShowTimeService {
         for (ShowTimeDto st : showTimeDtoList) {
             System.out.println(st.getDateTime() + " - film: " + st.getFilmName() + " - screen: " + st.getScreenName());
         }
+
+        System.out.println("take a pause");
     }
+
+//    public void printShowTimeForCinemaByDate(LocalDate date) {
+//        ShowTimeDao dao = new ShowTimeDao();
+//        List<ShowTimeDto> showTimeDtoList = dao.findShowTimeDtosBetweenDateTimes();
+//
+//        for (ShowTimeDto st : showTimeDtoList) {
+//            System.out.println(st.getDateTime() + " - film: " + st.getFilmName() + " - screen: " + st.getScreenName());
+//        }
+//    }
 
     private Timestamp convertToTimeStamp(LocalDateTime dateTimeFrom) {
         return Timestamp.valueOf(dateTimeFrom);
