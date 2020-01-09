@@ -12,7 +12,6 @@ public class CinemaService {
 
 
     public Cinema findById(Long cinemaId) {
-
         Cinema cinema = null;
 
         System.out.println("Ищем cinema по ID");

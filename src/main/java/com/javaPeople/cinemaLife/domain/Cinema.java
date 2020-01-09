@@ -38,6 +38,7 @@ public class Cinema {
         this.city = city;
     }
 
+
     @Override
     public String toString() {
         return new StringJoiner(", ", Cinema.class.getSimpleName() + "[", "]")
@@ -45,5 +46,6 @@ public class Cinema {
                 .add("name='" + name + "'")
                 .add("city='" + city + "'")
                 .toString();
+
     }
 }
