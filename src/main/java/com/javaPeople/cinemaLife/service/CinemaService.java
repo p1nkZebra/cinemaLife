@@ -68,7 +68,7 @@ public class CinemaService {
                 c = DriverManager.getConnection(
                         "jdbc:postgresql://localhost:5432/postgres",
                         "postgres",
-                        "3$Jf&z#9d*&2"
+                        DbConfig.DB_PASSWORD
                 );
                 stmt = c.createStatement();
                 sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE name =" + cinemaName ;
@@ -111,7 +111,7 @@ public class CinemaService {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/postgres",
                     "postgres",
-                    "3$Jf&z#9d*&2"
+                    DbConfig.DB_PASSWORD
             );
 
 

@@ -78,7 +78,7 @@ public class ScreenService {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/postgres",
                     "postgres",
-                    "3$Jf&z#9d*&2"
+                    DbConfig.DB_PASSWORD
             );
 
             sql = "SELECT * FROM CINEMA_LIFE.SCREEN WHERE ID = ?";
