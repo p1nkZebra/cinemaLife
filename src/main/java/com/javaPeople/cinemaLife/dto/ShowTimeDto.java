@@ -7,12 +7,14 @@ public class ShowTimeDto {
     private Long id;
     private String filmName;
     private String screenName;
+    private String cinemaName;
     private LocalDateTime dateTime;
 
-    public ShowTimeDto(Long id, String filmName, String screenName, LocalDateTime dateTime) {
+    public ShowTimeDto(Long id, String filmName, String screenName, String cinemaName, LocalDateTime dateTime) {
         this.id = id;
         this.filmName = filmName;
         this.screenName = screenName;
+        this.setCinemaName(cinemaName);
         this.dateTime = dateTime;
     }
 
@@ -41,6 +43,10 @@ public class ShowTimeDto {
         this.screenName = screenName;
     }
 
+    public String getCinemaName() { return cinemaName; }
+
+    public void setCinemaName(String cinemaName) { this.cinemaName = cinemaName; }
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }
@@ -48,4 +54,6 @@ public class ShowTimeDto {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
+
+
 }

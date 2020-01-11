@@ -17,16 +17,21 @@ public class MainService {
 
     public static void main(String[] args) throws IOException, URISyntaxException, DocumentException, SAXException, ParserConfigurationException {
 
-        TicketService ticketService = new TicketService();
-        ticketService.printTicket(254L);
-        ticketService.printTicket(34L);
-        ShowTimeService showTimeService = new ShowTimeService();
-        LocalDate date = LocalDate.of(2019, 12, 21);
-        showTimeService.printShowTimeForDate(date);
-////        LocalDateTime dateTime = date.atTime(3,0);
-////        LocalDateTime dateTime2 = dateTime.plusHours(20);
-////        System.out.println(dateTime2.toString());
+//        TicketService ticketService = new TicketService();
+//        ticketService.printTicket(254L);
+//        ticketService.printTicket(34L);
+//        Cinema cinema = new CinemaService().findById(15L);
+//        ShowTimeService showTimeService = new ShowTimeService();
+//        LocalDate date = LocalDate.of(2019, 12, 20);
+//        if (cinema!=null) {
+//            showTimeService.printShowTimeForCinemaByDate(date,cinema);
+//        }
+//        else {
+//            System.out.println("Нет такого Кинотеатра");
+//        }
 
-//        showTimeService.printShowTimeForDate(dateTime, dateTime2);
+        CinemaService cs=new CinemaService();
+//        System.out.println(cs.findCinemaByName("MovieCinema").getName());
+        cs.save(new Cinema(4L,"New Cinema", "Saint P" ));
     }
 }

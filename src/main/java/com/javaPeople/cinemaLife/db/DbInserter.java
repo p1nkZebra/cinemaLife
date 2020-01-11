@@ -35,7 +35,9 @@ public class DbInserter {
 //            sql = "INSERT INTO CINEMA_LIFE.SCREEN (ID, CINEMA_ID, NAME, ROWS, SEATS_IN_ROW)" +
 //                    "VALUES (2, 1, \'Зал 2\', 25, 42)";
 //            stmt.executeUpdate(sql);
-
+            sql = "INSERT INTO CINEMA_LIFE.CINEMA (ID, NAME, CITY)" +
+                    "VALUES (5, \'MovieCinema\', \'Moscow\')";
+            stmt.executeUpdate(sql);
 
             sql = "INSERT INTO CINEMA_LIFE.FILM (name, director, year)" +
                     "VALUES (\'Kill Bill\', \'Quentin Tarantino\', 2003)";

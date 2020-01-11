@@ -3,17 +3,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="com.javaPeople.cinemaLife.servlet.logic.ServletService" %>
-
+<%@ page import="com.javaPeople.cinemaLife.*" %>
+<%@ page import="com.javaPeople.cinemaLife.service.MainService" %>
+<%@ page import="com.javaPeople.cinemaLife.dto.ShowTimeDto" %>
 
 
 <html>
 <head>
-    <title>Test title</title>
+    <title>Сеансы 20 декабря</title>
 </head>
 
+<%--<%--%>
+<%--    Date today = new Date();--%>
+<%--    String mainHeader = "Today is " + today;--%>
+<%--%>--%>
+
 <%
-    Date today = new Date();
-    String mainHeader = "Today is " + today;
+    String mainHeader = "Сеансы 20 декабря";
 %>
 
 
@@ -22,40 +28,21 @@
 
 
 
-<p> <% out.println("test string for out.println()"); %> </p>
-
-
-
-<p>
-    <%
-        for (int i = 0; i < 4; i++) {
-            out.println("<p>" + "print paragraph tag in cycle for " + i + "</p>");
-        }
-    %>
-</p>
-
-
-
 <p>
     <%
         ServletService service = new ServletService();
-
+        service.getShowTimeDtoList();
     %>
 
 
-    <%=service.getGreeting()%>
+    <% for (ShowTimeDto std:service.getShowTimeDtoList()){
+        out.println(std.getDateTime().toLocalTime() + " - film: " + std.getFilmName() + " - screen: " + std.getScreenName());
+        out.println("<br>");
+    } %>
 </p>
 
 
-<p>
-    <%
-        String name = request.getParameter("name");
 
-    %>
-
-
-    <%=service.getGreeting(name)%>
-</p>
 
 </body>
 </html>

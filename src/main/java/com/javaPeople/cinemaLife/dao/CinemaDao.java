@@ -1,0 +1,124 @@
+package com.javaPeople.cinemaLife.dao;
+
+import com.javaPeople.cinemaLife.db.DbConfig;
+import com.javaPeople.cinemaLife.domain.Cinema;
+
+import java.sql.*;
+
+public class CinemaDao {
+    public Cinema findCinemaById(Long cinemaId) {
+        Cinema cinema = null;
+
+//        System.out.println("Ищем cinema по ID");
+        Connection c = null;
+        Statement stmt = null;
+        String sql = "";
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/postgres",
+                    "postgres",
+                    DbConfig.DB_PASSWORD
+            );
+
+            stmt = c.createStatement();
+
+
+            sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE ID = " + cinemaId;
+            ResultSet resultSet = stmt.executeQuery(sql);
+
+            while (resultSet.next()) {
+                // Now we can fetch the data by column name, save and use them!
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String city = resultSet.getString("city");
+                cinema = new Cinema(id, name, city);
+
+
+            }
+
+            stmt.close();
+            c.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return cinema;
+    }
+
+    public Cinema findCinemaByName(String cinemaName) {
+        Cinema cinema = null;
+        Connection c = null;
+        Statement stmt = null;
+        String sql = "";
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/postgres",
+                    "postgres",
+                    DbConfig.DB_PASSWORD
+            );
+            stmt = c.createStatement();
+            sql = "SELECT * FROM CINEMA_LIFE.CINEMA WHERE NAME LIKE" + "'%" + cinemaName + "%'";
+
+            ResultSet resultSet = stmt.executeQuery(sql);
+
+            while (resultSet.next()) {
+                // Now we can fetch the data by column name, save and use them!
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String city = resultSet.getString("city");
+                cinema = new Cinema(id, name, city);
+                // System.out.println(cinema);  /**выводит все фильмы**/
+            }
+
+            stmt.close();
+            c.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return cinema;
+    }
+
+    public void saveCinema(Cinema cinema) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String sql = "";
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/postgres",
+                    "postgres",
+                    DbConfig.DB_PASSWORD
+            );
+
+
+            sql = "INSERT INTO CINEMA_LIFE.CINEMA (NAME, CITY)" +
+                    "VALUES (? ,?)";
+            statement = connection.prepareStatement(sql);
+
+            statement.setString(1, cinema.getName());
+            statement.setString(2, cinema.getCity());
+            statement.executeUpdate();
+            System.out.println(statement);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+}
