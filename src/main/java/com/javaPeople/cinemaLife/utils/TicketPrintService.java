@@ -1,4 +1,4 @@
-package com.javaPeople.cinemaLife.service;
+package com.javaPeople.cinemaLife.utils;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.BaseFont;

@@ -91,7 +91,8 @@ public class ShowTimeDao {
                     " JOIN  cinema_life.screen as c ON (a.screen_id = c.id)" +
                     " JOIN  cinema_life.cinema as d ON (c.cinema_id = d.id)" +
                     " WHERE 1 = 1 " +
-                    "       AND a.date_time between ? AND ? ";
+                    "       AND a.date_time between ? AND ? " +
+                    "       ORDER BY a.date_time ASC";
 
             statement = connection.prepareStatement(sql);
             statement.setTimestamp(1, dateTimeFrom);

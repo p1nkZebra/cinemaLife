@@ -12,26 +12,21 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 
 public class MainService {
 
     public static void main(String[] args) throws IOException, URISyntaxException, DocumentException, SAXException, ParserConfigurationException {
 
-//        TicketService ticketService = new TicketService();
-//        ticketService.printTicket(254L);
-//        ticketService.printTicket(34L);
-//        Cinema cinema = new CinemaService().findById(15L);
-//        ShowTimeService showTimeService = new ShowTimeService();
-//        LocalDate date = LocalDate.of(2019, 12, 20);
-//        if (cinema!=null) {
-//            showTimeService.printShowTimeForCinemaByDate(date,cinema);
-//        }
-//        else {
-//            System.out.println("Нет такого Кинотеатра");
-//        }
+        ShowTimeService showTimeService = new ShowTimeService();
+        LocalDate date = LocalDate.of(2019, 12, 20);
+//        showTimeService.printShowTimeForPeriod(date.atStartOfDay(), date.plusDays(1).atStartOfDay());
 
-        CinemaService cs=new CinemaService();
-//        System.out.println(cs.findCinemaByName("MovieCinema").getName());
-        cs.save(new Cinema(4L,"New Cinema", "Saint P" ));
+
+        Cinema cinema = new CinemaService().findCinemaById(1L);
+        showTimeService.printShowTimeForDate(date);
+        showTimeService.printShowTimeForCinemaByDate(date,"Рекорд Звезд");
+
+
     }
 }

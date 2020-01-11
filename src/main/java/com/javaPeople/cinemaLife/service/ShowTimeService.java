@@ -8,53 +8,94 @@ import com.javaPeople.cinemaLife.dto.ShowTimeDto;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowTimeService {
 
-    public void printShowTimeForDate(LocalDate date) {
+    public List<ShowTimeDto> getShowTimeForDate(LocalDate date) {
 
-        LocalDateTime dateTimeFrom = date.atTime(9,0);
-        LocalDateTime dateTimeTo = date.plusDays(1).atTime(3,0);
+        LocalDateTime dateTimeFrom = date.atTime(0,0);
+        LocalDateTime dateTimeTo = date.plusDays(1).atTime(0,0);
+        return  getShowTimeForPeriod(dateTimeFrom, dateTimeTo);
 
-        printShowTimeForDatetimePeriod(
-                convertToTimeStamp(dateTimeFrom),
-                convertToTimeStamp(dateTimeTo)
-        );
     }
 
-    public void printShowTimeForDate(LocalDateTime from, LocalDateTime to) {
-        printShowTimeForDatetimePeriod(
+    public List<ShowTimeDto> getShowTimeForPeriod(LocalDateTime from, LocalDateTime to) {
+        return getShowTimeForDatetimePeriod(
                 convertToTimeStamp(from),
                 convertToTimeStamp(to)
         );
     }
 
-    private void printShowTimeForDatetimePeriod(Timestamp from, Timestamp to) {
 
-        ShowTimeDao dao = new ShowTimeDao();
-        List<ShowTimeDto> showTimeDtoList = dao.findShowTimeDtosBetweenDateTimes(from, to);
-
+    public void printShowTimeForDate(LocalDate date) {
+        List<ShowTimeDto> showTimeDtoList = getShowTimeForDate(date);
+        System.out.println("Дата: " + date );
+        System.out.println("Сеансы: ");
+        String printRecord;
         for (ShowTimeDto st : showTimeDtoList) {
-            System.out.println(st.getDateTime() + " - film: " + st.getFilmName() + " - screen: " + st.getScreenName());
+            printRecord =
+                    "  " +st.getDateTime().toLocalTime() + "  \"" + st.getFilmName() +
+                    "\"" + "    [cinema: " + "\"" + st.getCinemaName() + "\"" +
+                    " - screen: " + "\"" + st.getScreenName()+ "\"]";
+            System.out.println(printRecord);
         }
-
-//        System.out.println("take a pause");
     }
 
-    public void printShowTimeForCinemaByDate(LocalDate date, Cinema cinema) {
-        Timestamp from = convertToTimeStamp(date.atStartOfDay());
-        Timestamp to = convertToTimeStamp(date.plusDays(1).atStartOfDay());
+
+    public void printShowTimeForPeriod(LocalDateTime from, LocalDateTime to) {
+        List<ShowTimeDto> showTimeDtoList = getShowTimeForPeriod(from,to);
+
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("ddMMM HH:mm");
+        System.out.println("Период:  с  " + from.format(f) + " по " + to.format(f));
+        System.out.println("Сеансы: ");
+        String printRecord;
+        for (ShowTimeDto st : showTimeDtoList) {
+            printRecord =
+                    "  "+st.getDateTime().format(f) + "  \"" + st.getFilmName() +
+                    "\"" + "    [cinema: " + "\"" + st.getCinemaName() +
+                    "\"" +  " - screen: " +  "\""+ st.getScreenName()+ "\"]";
+            System.out.println(printRecord);
+        }
+    }
+
+
+
+    private List<ShowTimeDto> getShowTimeForDatetimePeriod(Timestamp from, Timestamp to) {
+
         ShowTimeDao dao = new ShowTimeDao();
         List<ShowTimeDto> showTimeDtoList = dao.findShowTimeDtosBetweenDateTimes(from, to);
-        System.out.println("\nКинотеатр: " + cinema.getName());
-        System.out.println("Дата: " + date + "\n");
+        return showTimeDtoList;
+    }
+
+    public List<ShowTimeDto> getShowTimeForCinemaByDate(LocalDate date, String cinemaName) {
+        List<ShowTimeDto> showTimeDtoList = getShowTimeForDate(date);
+        List<ShowTimeDto> showTimeForCinema = new ArrayList<>();
         for (ShowTimeDto st : showTimeDtoList) {
-            if (cinema.getName().equals(st.getCinemaName())) {
-                System.out.println(st.getDateTime().toLocalTime() + " - film: " + st.getFilmName() + " - screen: " + st.getScreenName());
+            if (cinemaName.equals(st.getCinemaName())) {
+                showTimeForCinema.add(st);
             }
         }
-        System.out.println("\nTake a cup of tea");
+        return showTimeForCinema;
+    }
+
+
+    public void printShowTimeForCinemaByDate(LocalDate date, String cinemaName) {
+        List<ShowTimeDto> showTimeDtoList = getShowTimeForCinemaByDate(date,cinemaName);
+        System.out.println("\nКинотеатр: " + cinemaName);
+        System.out.println("Дата: " + date );
+        String printRecord;
+        for (ShowTimeDto st : showTimeDtoList) {
+            if (cinemaName.equals(st.getCinemaName())) {
+                printRecord =
+                        "  "+ st.getDateTime().toLocalTime() + "   film: " +
+                        "\"" + st.getFilmName() + "\"" + " - Screen: " +
+                        "\"" + st.getScreenName()+ "\"";
+                System.out.println(printRecord);
+            }
+        }
     }
 
     public Timestamp convertToTimeStamp(LocalDateTime dateTimeFrom) {

@@ -23,15 +23,13 @@ public class ServletService {
         return "Ку! " + name;
     }
 
-    public List<ShowTimeDto> getShowTimeDtoList() {
+    public List<ShowTimeDto> getShowTimeDtoList(LocalDate date) {
+        List<ShowTimeDto> showTimeList= new ShowTimeService().getShowTimeForDate(date);
+        return showTimeList;
+    }
 
-        ShowTimeService showTimeService = new ShowTimeService();
-        LocalDate date = LocalDate.of(2019, 12, 20);
-        Timestamp from = showTimeService.convertToTimeStamp(date.atStartOfDay());
-        Timestamp to = showTimeService.convertToTimeStamp(date.plusDays(1).atStartOfDay());
-        ShowTimeDao dao = new ShowTimeDao();
-        List<ShowTimeDto> showTimeDtoList = dao.findShowTimeDtosBetweenDateTimes(from, to);
-
-        return showTimeDtoList;
+    public List<ShowTimeDto> getShowTimeForCinema(LocalDate date, String cinemaName) {
+        List<ShowTimeDto> showTimeList= new ShowTimeService().getShowTimeForCinemaByDate(date,cinemaName);
+        return showTimeList;
     }
 }
